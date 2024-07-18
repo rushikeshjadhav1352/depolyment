@@ -1,0 +1,113 @@
+openapi: 3.0.0
+servers:
+  # Added by API Auto Mocking Plugin
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/JADHAVRUSHIKESH030/feedback-data/1.0.0
+info:
+  version: "1.0.0"
+  title: Resturant Feedback API
+  description: The Restaurant Feedback API provides endpoints for users to submit and retrieve feedback for a restaurant. This API allows customers to share their dining experiences, ratings, and comments, helping restaurant owners to understand their customers' satisfaction levels and make improvements to their services.
+paths:
+  /feedback:
+    get:
+      tags:
+        - Feedback
+      summary: Get All Feedback
+      operationId: getAllFeedback
+      responses:
+        '200':
+          description: Successful operation. Returns all feedback records.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Feedback'
+    post:
+      tags:
+        - Feedback
+      summary: Store Feedback
+      operationId: storeFeedback
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Feedback'
+      responses:
+        '201':
+          description: Feedback stored successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Feedback'
+  /feedback/{id}:
+    get:
+      tags:
+        - Feedback
+      summary: Get Feedback by ID
+      operationId: getFeedbackById
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            description: The ID of the feedback to retrieve.
+      responses:
+        '200':
+          description: Successful operation. Returns the feedback with the specified ID.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Feedback'
+        '404':
+          description: Feedback not found.
+    put:
+      tags:
+        - Feedback
+      summary: Update Feedback by ID
+      operationId: updateFeedbackById
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            description: The ID of the feedback to update.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Feedback'
+      responses:
+        '200':
+          description: Feedback updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Feedback'
+        '404':
+          description: Feedback not found.
+components:
+  schemas:
+    Feedback:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: The unique identifier of the feedback.
+        customerId:
+          type: integer
+          description: The ID of the customer submitting the feedback.
+        rating:
+          type: integer
+          description: The rating (1-5) given by the customer.
+        comments:
+          type: string
+          description: Additional comments provided by the customer.
+        submittedate:
+          type: string
+          format: date
+          description: The date when the feedback was submitted.
